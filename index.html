@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>JS + CSS Clock</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      body {
+        min-width: 360px;
+        width: 100%;
+        min-height: 360px;
+        height: 100vh;
+        background-image: url('https://image.freepik.com/vector-gratis/estilo-fondo-futurista_23-2148503794.jpg');
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        display: flex;
+        align-items: center;
+      }
+      .clock {
+        width: 100%;
+        height: 360px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      .clock-face {
+        background-image: url('https://i.imgur.com/Z9Uqb2v.png');
+        background-size: cover;
+        background-position: center;
+        min-width: 360px;
+        min-height: 360px;
+        border: 15px solid white;
+        border-radius: 50%;
+        position: relative;
+      }
+      .hand {
+        width: 50%;
+        border: 1.6px solid white;
+        border-radius: 10px;
+        position: absolute;
+        top: 50%;
+        right: 50%;
+        transform-origin: 100%;
+        transform: rotate(90deg);
+      }
+      .hour-hand {
+        width: 41%;
+      }
+      .min-hand {
+        width: 45%;
+        border: 1.3px solid rgb(45, 243, 27);
+      }
+      .second-hand {
+        width: 49%;
+        border: 0.5px solid red;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="clock">
+      <div class="clock-face">
+        <div class="hand hour-hand"></div>
+        <div class="hand min-hand"></div>
+        <div class="hand second-hand"></div>
+      </div>
+    </div>
+    <script>
+      const secondHand = document.querySelector('.second-hand');
+      const minsHand = document.querySelector('.min-hand');
+      const hourHand = document.querySelector('.hour-hand');
+
+      const addGrades = (el, grades) => {
+        el.style.transform = `rotate(${grades}deg)`;
+      };
+
+      function setDate() {
+        const now = new Date();
+        const seconds = now.getSeconds();
+        const minutes = now.getMinutes();
+        const hours = now.getHours();
+        const secondsDegrees = (seconds / 60) * 360 + 90;
+        const minutesDegrees = (minutes / 60) * 360 + (seconds / 60) * 6 + 90;
+        const hourDegrees = (hours / 12) * 360 + (minutes / 60) * 30 + 90;
+        addGrades(secondHand, secondsDegrees);
+        addGrades(minsHand, minutesDegrees);
+        addGrades(hourHand, hourDegrees);
+      }
+
+      setInterval(setDate, 1000);
+      setDate();
+    </script>
+  </body>
+</html>
